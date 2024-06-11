@@ -5,7 +5,7 @@ VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpeachForm", "SpeachForm.csproj", "{5CB3B692-A0E1-4FA7-84EF-BF3280F25902}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VoskDemo", "..\csharp\demo\VoskDemo.csproj", "{F8F2A6A2-23AF-47DC-9D15-6EBB655F4F1A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VoskDemo", "..\csharp\demo\VoskDemo.csproj", "{23E6B142-C31D-4026-A668-12B7178DCEB9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{5CB3B692-A0E1-4FA7-84EF-BF3280F25902}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5CB3B692-A0E1-4FA7-84EF-BF3280F25902}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5CB3B692-A0E1-4FA7-84EF-BF3280F25902}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F8F2A6A2-23AF-47DC-9D15-6EBB655F4F1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F8F2A6A2-23AF-47DC-9D15-6EBB655F4F1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F8F2A6A2-23AF-47DC-9D15-6EBB655F4F1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F8F2A6A2-23AF-47DC-9D15-6EBB655F4F1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23E6B142-C31D-4026-A668-12B7178DCEB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23E6B142-C31D-4026-A668-12B7178DCEB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23E6B142-C31D-4026-A668-12B7178DCEB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23E6B142-C31D-4026-A668-12B7178DCEB9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

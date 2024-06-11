@@ -40,20 +40,22 @@ namespace recording
 			{
 				//Записываем данные из буфера в файл
 				record.WriteFile(e.Buffer, e.BytesRecorded);
+				recogn.StreamBuf = e.Buffer;
+				recogn.BytesRead = e.BytesRecorded;
 			}
 		}
 		private void button3_MouseDown(object sender, MouseEventArgs e)
 		{
 			try
 			{
-				//record.Start();
+				record.Start();
 			}
 			catch (Exception ex) { MessageBox.Show(ex.Message); }
 		}
 		private void button3_MouseUp(object sender, MouseEventArgs e)
 		{
 			record.StopRecording();
-			//riTextBox.Text = recogn.start(Convert.ToByte(cbLangModel.SelectedIndex));
+			riTextBox.Text = recogn.start(Convert.ToByte(cbLangModel.SelectedIndex));
 		}
 		private void timer1_Tick(object sender, EventArgs e)
 		{
