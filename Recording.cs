@@ -14,6 +14,8 @@ namespace SpeachForm
 	internal class Recording
 	{
 		WaveIn waveIn;
+		EventHandler<WaveInEventArgs> _waveIn_DataAvailable;
+		EventHandler<StoppedEventArgs> _waveIn_RecordingStopped;
 		//WaveFileWriter writer;
 		//string outputFilename = "record.wav";
 		public MemoryStream recStream;
@@ -27,16 +29,18 @@ namespace SpeachForm
 		}
 		public void Start()
 		{
-			//writer = new WaveFileWriter(outputFilename, waveIn.WaveFormat);
-			//Начало записи
+			waveIn = new WaveIn();
+			waveIn.DeviceNumber = 0;
+			waveIn.DataAvailable += _waveIn_DataAvailable;
+			waveIn.RecordingStopped += _waveIn_RecordingStopped;
+			waveIn.WaveFormat = new WaveFormat(16000, 1);
+			recStream = new MemoryStream();
 			waveIn.StartRecording();
 		}
 		public void Stop()
 		{
-			//waveIn.Dispose();
-			//waveIn = null;
-			//writer.Close();
-			//writer = null;
+			waveIn.Dispose();
+			waveIn = null;
 		}
 		public void WriteFile(byte[] buffer, int bytesRecorded) 
 		{
@@ -47,15 +51,8 @@ namespace SpeachForm
 		}
 		public Recording(EventHandler<WaveInEventArgs> waveIn_DataAvailable, EventHandler<StoppedEventArgs> waveIn_RecordingStopped)
 		{
-			waveIn = new WaveIn();
-			waveIn.DeviceNumber = 0;
-			waveIn.DataAvailable += waveIn_DataAvailable;
-			waveIn.RecordingStopped += waveIn_RecordingStopped;
-				//Формат wav-файла - принимает параметры - частоту дискретизации и количество каналов(здесь mono)
-			waveIn.WaveFormat = new WaveFormat(16000, 1);
-			recStream = new MemoryStream();
-		//Инициализируем объект WaveFileWriter
-			
+			_waveIn_DataAvailable = waveIn_DataAvailable;
+			_waveIn_RecordingStopped = waveIn_RecordingStopped;
 		}
 	}
 }

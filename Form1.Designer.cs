@@ -56,7 +56,7 @@
 			// 
 			cbLangModel.DisplayMember = "1";
 			cbLangModel.FormattingEnabled = true;
-			cbLangModel.Items.AddRange(new object[] { "Russian small", "English small" });
+			cbLangModel.Items.AddRange(new object[] { "English small", "Russian small" });
 			cbLangModel.Location = new Point(134, 12);
 			cbLangModel.Name = "cbLangModel";
 			cbLangModel.Size = new Size(260, 23);
