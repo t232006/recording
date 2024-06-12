@@ -1,4 +1,4 @@
-namespace recording
+namespace SpeachForm
 {
 	internal static class Program
 	{

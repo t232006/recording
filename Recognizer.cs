@@ -6,52 +6,48 @@ using System.Threading.Tasks;
 using System.Text;
 using Vosk;
 
-namespace recording
+namespace SpeachForm
 {
 	internal class Recognizer
 	{
 		//string WORKDIR = Directory.GetCurrentDirectory();
-		private byte[]? streamBuf;
+		/*private byte[]? streamBuf;
 		private int bytesRead;
 		public int BytesRead { set => bytesRead = value; }
-		public byte[] StreamBuf { set { streamBuf = value; } }
+		public byte[] StreamBuf { set { streamBuf = value; } }*/
+		public MemoryStream Source;
 		private string[] langModel= new string[2] { "model-small-en", "model-small-ru" } ;
 		public string LangModel(byte ind)
 		{
 			return Directory.GetCurrentDirectory()+'\\'+langModel[ind];
 		}
 
-		public string Speaker(Model model, bool fromFile)
+		public string Speaker(Model model)
 		{
-			Stream source;
+			//Stream source;
 			// Output speakers
 			SpkModel spkModel = new SpkModel("model-spk");
 			VoskRecognizer rec = new VoskRecognizer(model, 16000.0f);
 			rec.SetSpkModel(spkModel);
 			StringBuilder s = new StringBuilder("");
-			if (fromFile)
+			
+				//source = File.OpenRead("record.wav");
+			if (Source==null) return "";
+			Source.Position = 0;
+			byte[] buffer = new byte[4096];
+			int bytesRead;
+			while ((bytesRead = Source.Read(buffer, 0, buffer.Length)) > 0)
 			{
-				source = File.OpenRead("record.wav");
-				while ((bytesRead = source.Read(streamBuf, 0, streamBuf.Length)) > 0)
+				if (rec.AcceptWaveform(buffer, bytesRead))
 				{
-					if (rec.AcceptWaveform(streamBuf, bytesRead))
-					{
-						s.Append(rec.Result());
-					}
-					else
-					{
-						s.Append(rec.PartialResult());
-					}
+					s.Append(rec.Result());
 				}
-				source.Close();
+				else
+				{
+					s.Append(rec.PartialResult());
+				}
 			}
-			else
-			{
-				while 
-			}
-
-
-
+			Source.Close();
 
 			s.Append(rec.FinalResult());
 			return s.ToString();

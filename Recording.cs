@@ -14,9 +14,9 @@ namespace SpeachForm
 	internal class Recording
 	{
 		WaveIn waveIn;
-		WaveFileWriter writer;
-		string outputFilename = "record.wav";
-		public Stream recStream;
+		//WaveFileWriter writer;
+		//string outputFilename = "record.wav";
+		public MemoryStream recStream;
 		public void StopRecording()
 		{
 			//MessageBox.Show("StopRecording");
@@ -41,8 +41,8 @@ namespace SpeachForm
 		public void WriteFile(byte[] buffer, int bytesRecorded) 
 		{
 			//Записываем данные из буфера в файл
-			recStream.Read(buffer, 0, bytesRecorded);
-			writer.Write(buffer, 0, bytesRecorded);
+			recStream.WriteAsync(buffer, 0, bytesRecorded);
+			//writer.Write(buffer, 0, bytesRecorded);
 
 		}
 		public Recording(EventHandler<WaveInEventArgs> waveIn_DataAvailable, EventHandler<StoppedEventArgs> waveIn_RecordingStopped)
@@ -53,6 +53,7 @@ namespace SpeachForm
 			waveIn.RecordingStopped += waveIn_RecordingStopped;
 				//Формат wav-файла - принимает параметры - частоту дискретизации и количество каналов(здесь mono)
 			waveIn.WaveFormat = new WaveFormat(16000, 1);
+			recStream = new MemoryStream();
 		//Инициализируем объект WaveFileWriter
 			
 		}

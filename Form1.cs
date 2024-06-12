@@ -9,7 +9,7 @@ using System.Security.Cryptography;
 using NAudio.Wave;
 using SpeachForm;
 
-namespace recording
+namespace SpeachForm
 {
 	public partial class Form1 : Form
 	{
@@ -40,8 +40,9 @@ namespace recording
 			{
 				//Записываем данные из буфера в файл
 				record.WriteFile(e.Buffer, e.BytesRecorded);
-				recogn.StreamBuf = e.Buffer;
-				recogn.BytesRead = e.BytesRecorded;
+				recogn.Source = record.recStream;
+				//recogn.StreamBuf = e.Buffer;
+				//recogn.BytesRead = e.BytesRecorded;
 			}
 		}
 		private void button3_MouseDown(object sender, MouseEventArgs e)

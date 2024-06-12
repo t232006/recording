@@ -1,4 +1,4 @@
-﻿namespace recording
+﻿namespace SpeachForm
 {
 	partial class Form1
 	{
