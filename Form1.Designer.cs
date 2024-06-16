@@ -46,6 +46,7 @@
 			button3 = new Button();
 			riTextBox = new RichTextBox();
 			timer = new System.Windows.Forms.Timer(components);
+			volumeMeter1 = new NAudio.Gui.VolumeMeter();
 			groupBox1.SuspendLayout();
 			groupBox3.SuspendLayout();
 			groupBox4.SuspendLayout();
@@ -202,9 +203,9 @@
 			// 
 			// riTextBox
 			// 
-			riTextBox.Location = new Point(9, 287);
+			riTextBox.Location = new Point(9, 315);
 			riTextBox.Name = "riTextBox";
-			riTextBox.Size = new Size(385, 207);
+			riTextBox.Size = new Size(385, 179);
 			riTextBox.TabIndex = 5;
 			riTextBox.Text = "";
 			// 
@@ -214,11 +215,24 @@
 			timer.Interval = 1000;
 			timer.Tick += timer1_Tick;
 			// 
+			// volumeMeter1
+			// 
+			volumeMeter1.Amplitude = 0F;
+			volumeMeter1.Location = new Point(9, 293);
+			volumeMeter1.MaxDb = 18F;
+			volumeMeter1.MinDb = -60F;
+			volumeMeter1.Name = "volumeMeter1";
+			volumeMeter1.Orientation = Orientation.Horizontal;
+			volumeMeter1.Size = new Size(385, 23);
+			volumeMeter1.TabIndex = 6;
+			volumeMeter1.Text = "volumeMeter1";
+			// 
 			// Form1
 			// 
 			AutoScaleDimensions = new SizeF(7F, 15F);
 			AutoScaleMode = AutoScaleMode.Font;
 			ClientSize = new Size(402, 506);
+			Controls.Add(volumeMeter1);
 			Controls.Add(riTextBox);
 			Controls.Add(groupBox1);
 			Controls.Add(label1);
@@ -256,5 +270,6 @@
 		private TextBox textBox1;
 		private RichTextBox riTextBox;
 		private System.Windows.Forms.Timer timer;
+		private NAudio.Gui.VolumeMeter volumeMeter1;
 	}
 }

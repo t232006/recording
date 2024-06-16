@@ -41,8 +41,11 @@ namespace SpeachForm
 				//Записываем данные из буфера в файл
 				record.WriteFile(e.Buffer, e.BytesRecorded);
 				recogn.Source = record.recStream;
-				//recogn.StreamBuf = e.Buffer;
-				//recogn.BytesRead = e.BytesRecorded;
+				for (int i = 0; i < e.BytesRecorded; i += 2)
+				{
+					short sample = (short)(e.Buffer[i + 1] << 8 | e.Buffer[i]);
+					volumeMeter1.Amplitude = Math.Abs(sample / 32768f);
+				}
 			}
 		}
 		private void button3_MouseDown(object sender, MouseEventArgs e)
