@@ -8,6 +8,7 @@ using System.IO;
 using System.Security.Cryptography;
 using NAudio.Wave;
 using SpeachForm;
+using System.Threading.Channels;
 
 namespace SpeachForm
 {
@@ -15,6 +16,14 @@ namespace SpeachForm
 	{
 		Recording record;
 		Recognizer recogn;
+		static Channel<byte[]> rootChannel = Channel.CreateUnbounded<byte[]>(new UnboundedChannelOptions
+		{
+			AllowSynchronousContinuations = true,
+			SingleReader = true,
+			SingleWriter = true
+		});
+		ChannelReader<byte[]> recReader = rootChannel;
+		ChannelWriter<byte[]> recWriter = rootChannel;
 
 		public Form1()
 		{
@@ -31,7 +40,7 @@ namespace SpeachForm
 				record.Stop();
 			}
 		}
-		void waveIn_DataAvailable(object sender, WaveInEventArgs e)
+		async void waveIn_DataAvailable(object sender, WaveInEventArgs e)
 		{
 			if (this.InvokeRequired)
 			{
@@ -41,7 +50,9 @@ namespace SpeachForm
 			{
 				//Записываем данные из буфера в файл
 				//record.WriteFile(e.Buffer, e.BytesRecorded);
-				recogn.Source = record.recStream;
+				//recogn.Source = record.recStream;
+				await recWriter.WriteAsync(e.Buffer);
+				recogn.StreamBuf = await recReader.ReadAsync();
 				for (int i = 0; i < e.BytesRecorded; i += 2)
 				{
 					short sample = (short)(e.Buffer[i + 1] << 8 | e.Buffer[i]);
