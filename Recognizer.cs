@@ -22,7 +22,7 @@ namespace SpeachForm
 			return Directory.GetCurrentDirectory()+'\\'+langModel[ind];
 		}
 
-		public string Speaker(Model model)
+		string Speaker(Model model)
 		{
 			//Stream source;
 			// Output speakers
@@ -47,7 +47,7 @@ namespace SpeachForm
 					s.Append(rec.PartialResult());
 				}
 			}
-			Source.Close();
+			//Source.Close();
 
 			s.Append(rec.FinalResult());
 			return s.ToString();

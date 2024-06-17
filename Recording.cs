@@ -42,13 +42,7 @@ namespace SpeachForm
 			waveIn.Dispose();
 			waveIn = null;
 		}
-		public void WriteFile(byte[] buffer, int bytesRecorded) 
-		{
-			//Записываем данные из буфера в файл
-			recStream.WriteAsync(buffer, 0, bytesRecorded);
-			//writer.Write(buffer, 0, bytesRecorded);
-
-		}
+	
 		public Recording(EventHandler<WaveInEventArgs> waveIn_DataAvailable, EventHandler<StoppedEventArgs> waveIn_RecordingStopped)
 		{
 			_waveIn_DataAvailable = waveIn_DataAvailable;

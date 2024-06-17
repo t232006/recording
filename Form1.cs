@@ -8,6 +8,7 @@ using System.IO;
 using System.Security.Cryptography;
 using NAudio.Wave;
 using SpeachForm;
+using System.Threading.Channels;
 
 namespace SpeachForm
 {
@@ -15,6 +16,14 @@ namespace SpeachForm
 	{
 		Recording record;
 		Recognizer recogn;
+		static Channel<MemoryStream> rootChannel = Channel.CreateUnbounded<MemoryStream>(new UnboundedChannelOptions
+		{
+			AllowSynchronousContinuations = true,
+			SingleReader = true,
+			SingleWriter = true
+		});
+		ChannelReader<MemoryStream> recReader = rootChannel;
+		ChannelWriter<MemoryStream> recWriter = rootChannel;
 		public Form1()
 		{
 			InitializeComponent();
@@ -30,7 +39,7 @@ namespace SpeachForm
 				record.Stop();
 			}
 		}
-		void waveIn_DataAvailable(object sender, WaveInEventArgs e)
+		async void waveIn_DataAvailable(object sender, WaveInEventArgs e)
 		{
 			if (this.InvokeRequired)
 			{
@@ -39,13 +48,16 @@ namespace SpeachForm
 			else
 			{
 				//Записываем данные из буфера в файл
-				record.WriteFile(e.Buffer, e.BytesRecorded);
-				recogn.Source = record.recStream;
+				await record.recStream.WriteAsync(e.Buffer, 0, e.BytesRecorded);
+				await recWriter.WriteAsync(record.recStream);
+				recogn.Source = await recReader.ReadAsync();
 				for (int i = 0; i < e.BytesRecorded; i += 2)
 				{
 					short sample = (short)(e.Buffer[i + 1] << 8 | e.Buffer[i]);
 					volumeMeter1.Amplitude = Math.Abs(sample / 32768f);
 				}
+				var slModel = Convert.ToByte(cbLangModel.SelectedIndex);
+				riTextBox.Text = recogn.start(slModel);
 			}
 		}
 		private void button3_MouseDown(object sender, MouseEventArgs e)
@@ -59,7 +71,7 @@ namespace SpeachForm
 		private void button3_MouseUp(object sender, MouseEventArgs e)
 		{
 			record.StopRecording();
-			riTextBox.Text = recogn.start(Convert.ToByte(cbLangModel.SelectedIndex));
+			//riTextBox.Text = recogn.start(Convert.ToByte(cbLangModel.SelectedIndex));
 		}
 		private void timer1_Tick(object sender, EventArgs e)
 		{
