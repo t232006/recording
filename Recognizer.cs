@@ -11,11 +11,9 @@ namespace SpeachForm
 	internal class Recognizer
 	{
 		//string WORKDIR = Directory.GetCurrentDirectory();
-		/*private byte[]? streamBuf;
-		private int bytesRead;
-		public int BytesRead { set => bytesRead = value; }
-		public byte[] StreamBuf { set { streamBuf = value; } }*/
-		public MemoryStream Source;
+		private byte[]? streamBuf;
+		public byte[] StreamBuf { set { streamBuf = value; } }
+		//public MemoryStream Source;
 		private string[] langModel= new string[2] { "model-small-en", "model-small-ru" } ;
 		public string LangModel(byte ind)
 		{
@@ -32,13 +30,13 @@ namespace SpeachForm
 			StringBuilder s = new StringBuilder("");
 			
 				//source = File.OpenRead("record.wav");
-			if (Source==null) return "";
-			Source.Position = 0;
-			byte[] buffer = new byte[4096];
-			int bytesRead;
-			while ((bytesRead = Source.Read(buffer, 0, buffer.Length)) > 0)
-			{
-				if (rec.AcceptWaveform(buffer, bytesRead))
+			if (streamBuf==null) return "";
+			//Source.Position = 0;
+			//byte[] buffer = new byte[4096];
+			//int bytesRead;
+			//while ((bytesRead = Source.Read(buffer, 0, buffer.Length)) > 0)
+			//{
+				if (rec.AcceptWaveform(streamBuf, streamBuf.Length))
 				{
 					s.Append(rec.Result());
 				}
@@ -46,8 +44,8 @@ namespace SpeachForm
 				{
 					s.Append(rec.PartialResult());
 				}
-			}
-			Source.Close();
+			//}
+			//Source.Close();
 
 			s.Append(rec.FinalResult());
 			return s.ToString();

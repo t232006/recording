@@ -18,7 +18,7 @@ namespace SpeachForm
 		EventHandler<StoppedEventArgs> _waveIn_RecordingStopped;
 		//WaveFileWriter writer;
 		//string outputFilename = "record.wav";
-		public MemoryStream recStream;
+		//public MemoryStream recStream;
 		public void StopRecording()
 		{
 			//MessageBox.Show("StopRecording");
@@ -34,20 +34,13 @@ namespace SpeachForm
 			waveIn.DataAvailable += _waveIn_DataAvailable;
 			waveIn.RecordingStopped += _waveIn_RecordingStopped;
 			waveIn.WaveFormat = new WaveFormat(16000, 1);
-			recStream = new MemoryStream();
+			//recStream = new MemoryStream();
 			waveIn.StartRecording();
 		}
 		public void Stop()
 		{
 			waveIn.Dispose();
 			waveIn = null;
-		}
-		public void WriteFile(byte[] buffer, int bytesRecorded) 
-		{
-			//Записываем данные из буфера в файл
-			recStream.WriteAsync(buffer, 0, bytesRecorded);
-			//writer.Write(buffer, 0, bytesRecorded);
-
 		}
 		public Recording(EventHandler<WaveInEventArgs> waveIn_DataAvailable, EventHandler<StoppedEventArgs> waveIn_RecordingStopped)
 		{

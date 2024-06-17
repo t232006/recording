@@ -15,6 +15,7 @@ namespace SpeachForm
 	{
 		Recording record;
 		Recognizer recogn;
+
 		public Form1()
 		{
 			InitializeComponent();
@@ -39,7 +40,7 @@ namespace SpeachForm
 			else
 			{
 				//Записываем данные из буфера в файл
-				record.WriteFile(e.Buffer, e.BytesRecorded);
+				//record.WriteFile(e.Buffer, e.BytesRecorded);
 				recogn.Source = record.recStream;
 				for (int i = 0; i < e.BytesRecorded; i += 2)
 				{
